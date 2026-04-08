@@ -160,11 +160,14 @@ namespace {
 
     // Get optional source of JEC, defaults the total uncertainty if the user doesn't specify one
     std::string source = ctx.get("jecsmear_source", "Total");
-
+    TString unc_file = locate_file(filenames[0]);
+     
+    std::cout<<"original file name: "<<filenames[0]<<std::endl;
+    std::cout<<"original file name location: "<<unc_file.Data()<<std::endl;
     //initialize JetCorrectionUncertainty if shift direction is not "nominal", else return NULL pointer
     if(direction!=0){
       //take name from the L1FastJet correction (0th element of filenames) and replace "L1FastJet" by "UncertaintySources" to get the proper name of the uncertainty file
-      TString unc_file = locate_file(filenames[0]);
+      // TString unc_file = locate_file(filenames[0]);
       if (unc_file.Contains("L1FastJet")) {
         unc_file.ReplaceAll("L1FastJet","UncertaintySources");
       }
@@ -177,6 +180,7 @@ namespace {
       JetCorrectionUncertainty* jec_uncertainty = new JetCorrectionUncertainty(*(new JetCorrectorParameters(unc_file.Data(), source)));
       return jec_uncertainty;
     }
+    std::cout<<"after replacing: " <<unc_file.Data()<<std::endl; 
     return NULL;
 
   }
@@ -580,7 +584,7 @@ JetResolutionSmearer::JetResolutionSmearer(uhh2::Context & ctx){
   } else if (year == Year::isUL16postVFP) {
     version = "Summer20UL16_JRV3";
   } else if (year == Year::isUL17) {
-    version = "Summer19UL17_JRV2";
+    version = "Summer19UL17_JRV3";
   } else if (year == Year::isUL18) {
     version = "Summer19UL18_JRV2";
   } else {

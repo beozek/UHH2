@@ -29,10 +29,10 @@ public:
   };
   explicit BTag(algo tagger, wp working_point);
 
-  bool operator()(const Jet & jet, const uhh2::Event & event) {return jet_id(jet,event);}
+  bool operator()(const Jet & jet, const uhh2::Event & event) const {return jet_id(jet,event);}
 
-  std::string GetTagger() {return m_algo;}
-  int GetWorkingPoint() {return m_working_point;}
+  std::string GetTagger() const {return m_algo;}
+  int GetWorkingPoint() const {return m_working_point;}
 private:
   std::string m_algo;
   int m_working_point;
@@ -93,11 +93,15 @@ private:
   wp m_working_point;
 
   //UL taken from https://twiki.cern.ch/twiki/bin/view/CMS/JetID13TeVUL
-  // No differences between the UL years
-  bool tightIDUL_CHS(const Jet & jet) const;
-  bool tightIDUL_PUPPI(const Jet & jet) const;
-  bool tightLepVetoIDUL_CHS(const Jet & jet) const;
-  bool tightLepVetoIDUL_PUPPI(const Jet & jet) const;
+  // Differences between UL16 and UL17/UL18
+  bool tightIDUL16_CHS(const Jet & jet) const;
+  bool tightIDUL16_PUPPI(const Jet & jet) const;
+  bool tightLepVetoIDUL16_CHS(const Jet & jet) const;
+  bool tightLepVetoIDUL16_PUPPI(const Jet & jet) const;
+  bool tightIDUL1718_CHS(const Jet & jet) const;
+  bool tightIDUL1718_PUPPI(const Jet & jet) const;
+  bool tightLepVetoIDUL1718_CHS(const Jet & jet) const;
+  bool tightLepVetoIDUL1718_PUPPI(const Jet & jet) const;
 
   //2016 taken from https://twiki.cern.ch/twiki/bin/view/CMS/JetID13TeVRun2016
   bool looseID2016_CHS(const Jet & jet) const;
